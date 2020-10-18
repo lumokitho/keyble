@@ -197,13 +197,14 @@ const CONNECTION_STATE = {
  */
 const Key_Ble = class extends Event_Emitter {
 
-	constructor({address, user_id=255, user_key, auto_disconnect_time=15.0, status_update_time}) {
+	constructor({address, user_id=255, user_key, auto_disconnect_time=15.0, status_update_time, hci_device}) {
 		super()
 		this.address = simble.canonicalize.address(address);
 		this.user_id = user_id;
 		this.user_key = convert_to_byte_array(user_key);
 		this.auto_disconnect_time = auto_disconnect_time;
 		this.set_status_update_time(status_update_time);
+		this.hci_device = simble.set_hci(hci_device);
 		this.received_message_fragments = [];
 		this.local_security_counter = 1;
 		this.remote_security_counter = 0;
