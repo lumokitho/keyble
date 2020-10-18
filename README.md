@@ -126,43 +126,36 @@ With a valid user ID and user key, as obtained by running the *keyble-registerus
 
 This is what the *keyble-sendcommand* tool is for.
 
-    usage: keyble-sendcommand [-h] --address ADDRESS --user_id USER_ID --user_key
-                              USER_KEY [--auto_disconnect_time AUTO_DISCONNECT_TIME]
-                              [--status_update_time STATUS_UPDATE_TIME]
-                              [--timeout TIMEOUT]
-                              [--command {lock,open,unlock,status}]
-                          
-    
-    Control (lock/unlock/open) an eQ-3 eqiva Bluetooth smart lock.
-    
-    Optional arguments:
-      -h, --help            Show this help message and exit.
-      --address ADDRESS, -a ADDRESS
-                            The smart lock's MAC address
-      --user_id USER_ID, -u USER_ID
-                            The user ID
-      --user_key USER_KEY, -k USER_KEY
-                            The user key
-      --auto_disconnect_time AUTO_DISCONNECT_TIME, -adt AUTO_DISCONNECT_TIME
-                            The auto-disconnect time. If connected to the lock, 
-                            the connection will be automatically disconnected 
-                            after this many seconds of inactivity, in order to 
-                            save battery. A value of 0 will deactivate 
-                            auto-disconnect (default: 30)
-      --status_update_time STATUS_UPDATE_TIME, -sut STATUS_UPDATE_TIME
-                            The status update time. If no status information has 
-                            been received for this many seconds, automatically 
-                            connect to the lock and query the status. A value of 
-                            0 will deactivate status updates (default: 600)
-      --timeout TIMEOUT, -t TIMEOUT
-                            The timeout time. Commands must finish within this 
-                            many seconds, otherwise there is an error. A value of 
-                            0 will deactivate timeouts (default: 40)
-      --command {lock,open,unlock,status}, -c {lock,open,unlock,status}
-                            The command to perform. If not provided on the 
-                            command line, the command(s) will be read as input 
-                            lines from STDIN instead
+    usage: keyble-sendcommand [-h] --address ADDRESS --user_id USER_ID --user_key USER_KEY [--auto_disconnect_time AUTO_DISCONNECT_TIME]
+                          [--status_update_time STATUS_UPDATE_TIME] [--hci-device HCI_DEVICE] [--timeout TIMEOUT]
+                          [--command {lock,open,unlock,status}] [--output_status_updates OUTPUT_STATUS_UPDATES]
 
+Control (lock/unlock/open/status) an eQ-3 eqiva Bluetooth smart lock.
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      --address ADDRESS, -a ADDRESS
+                        The smart lock's MAC address
+    --user_id USER_ID, -u USER_ID
+                        The user ID
+      --user_key USER_KEY, -k USER_KEY
+                        The user key
+      --auto_disconnect_time AUTO_DISCONNECT_TIME, -adt AUTO_DISCONNECT_TIME
+                        The auto-disconnect time. If connected to the lock, the connection will be automatically disconnected after this
+                        many seconds of inactivity, in order to save battery. A value of 0 will deactivate auto-disconnect (default: 15)
+      --status_update_time STATUS_UPDATE_TIME, -sut STATUS_UPDATE_TIME
+                        The status update time. If no status information has been received for this many seconds, automatically connect
+                        to the lock and query the status. A value of 0 will deactivate status updates (default: 900)
+      --hci-device HCI_DEVICE, -hci HCI_DEVICE
+                        The hci device to be used. If not provided hci0 is used. (default: 0)
+      --timeout TIMEOUT, -t TIMEOUT
+                        The timeout time. Commands must finish within this many seconds, otherwise there is an error. A value of 0 will
+                        deactivate timeouts (default: 30)
+      --command {lock,open,unlock,status}, -c {lock,open,unlock,status}
+                        The command to perform. If not provided on the command line, the command(s) will be read as input lines from
+                        STDIN instead
+      --output_status_updates OUTPUT_STATUS_UPDATES, -osu OUTPUT_STATUS_UPDATES
+                        Output status updates as well, not just status changes
 Usage example:
 
     keyble-sendcommand --address 01:23:56:67:89:ab --user_id 1 --user_key ca78ad9b96131414359e5e7cecfd7f9e --command open
