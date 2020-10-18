@@ -36,7 +36,13 @@ const DEFAULT_STATUS_UPDATE_TIME = 900.0;
  */
 const DEFAULT_TIMEOUT_TIME = 30.0;
 
-const send_commands_then_exit = async ({address, user_id, user_key, auto_disconnect_time, status_update_time, command, timeout, output_status_updates=true}) => {
+/**
+ * The default HCI device.
+ */
+const DEFAULT_HCI_DEVICE_ID = 0;
+
+
+const send_commands_then_exit = async ({address, user_id, user_key, auto_disconnect_time, status_update_time, hci_device, command, timeout, output_status_updates=true}) => {
 	try {
 		const key_ble = new keyble.Key_Ble({
 			address: address,
@@ -44,6 +50,7 @@ const send_commands_then_exit = async ({address, user_id, user_key, auto_disconn
 			user_key: user_key,
 			auto_disconnect_time: auto_disconnect_time,
 			status_update_time: status_update_time,
+			hci_device: hci_device,
 		});
 		key_ble.on((output_status_updates ? 'status_update' : 'status_change'), (lock_state) => {
 			console.log(JSON.stringify(lock_state));
@@ -101,6 +108,12 @@ if (require.main == module) {
 		type: 'float',
 		default: DEFAULT_STATUS_UPDATE_TIME,
 		help: `The status update time. If no status information has been received for this many seconds, automatically connect to the lock and query the status. A value of 0 will deactivate status updates (default: ${DEFAULT_STATUS_UPDATE_TIME})`,
+	});
+	argument_parser.add_argument('--hci-device', '-hci', {
+		required: false,
+		type: 'int',
+		default: DEFAULT_HCI_DEVICE_ID,
+		help: `The default hci device to be used. If not provoded hci0 is used. (default: ${DEFAULT_HCI_DEVICE_ID})`,
 	});
 	argument_parser.add_argument('--timeout', '-t', {
 		type: 'float',
