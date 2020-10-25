@@ -37,10 +37,9 @@ const DEFAULT_STATUS_UPDATE_TIME = 900.0;
 const DEFAULT_TIMEOUT_TIME = 30.0;
 
 /**
- * The default HCI device.
+ * The default HCI device
  */
 const DEFAULT_HCI_DEVICE_ID = 0;
-
 
 const send_commands_then_exit = async ({address, user_id, user_key, auto_disconnect_time, status_update_time, hci_device, command, timeout, output_status_updates=true}) => {
 	try {
@@ -113,7 +112,7 @@ if (require.main == module) {
 		required: false,
 		type: 'int',
 		default: DEFAULT_HCI_DEVICE_ID,
-		help: `The default hci device to be used. If not provoded hci0 is used. (default: ${DEFAULT_HCI_DEVICE_ID})`,
+		help: `The hci device to be used. If not provided hci0 is used. (default: ${DEFAULT_HCI_DEVICE_ID})`,
 	});
 	argument_parser.add_argument('--timeout', '-t', {
 		type: 'float',
